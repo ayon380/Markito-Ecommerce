@@ -6,14 +6,40 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { useRouter } from "next/navigation";
-import StarRating from "../../../components/stars";
+// import StarRating from "../../../components/stars";
 import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
+import { set } from "mongoose";
 const Page = ({ params }) => {
     const [product, setProduct] = useState(null);
     const router = useRouter();
+    const [newComment, setNewComment] = useState("")
     const [loading, setLoading] = useState(true);
+    const [rating, setRating] = useState(0);
+    const [content, setContent] = useState("");
+    const [newReview, setNewReview] = useState({ content: "", stars: 0 })
+    const handleRatingChange = (value) => {
+        setRating(value);
+    };
+    const StarRating = ({ rating, onChange }) => {
+        return (
+            <div className="flex items-center">
+                {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                        key={star}
+                        onClick={() => onChange(star)}
+                        className={`text-2xl ${star <= rating ? "text-yellow-500" : "text-gray-300"
+                            }`}
+                    >
+                        ★
+                    </button>
+                ))}
+            </div>
+        );
+    };
     // const pathname = usePathname()
+    const [title, settitle] = useState('')
+    const [loadingcomment, setLoadingcomment] = useState(false);
     const [products, setProducts] = useState([]);
     const fetchTrendingProducts = async () => {
         try {
@@ -27,6 +53,44 @@ const Page = ({ params }) => {
             console.error("Error fetching trending products:", error);
         }
     };
+    const handleAddReview = async (event) => {
+        event.preventDefault();
+        if (newReview.content.trim() === "" || newReview.stars === 0) {
+            toast.error("Please provide a review and rating.");
+            return;
+        }
+
+        // Update the product state with the new review
+        try {
+            const qwe = {
+                productid: product._id,
+                content: newReview.content,
+                rating: newReview.stars
+            }
+            const res = await fetch("/api/product/review", {
+                method: "POST",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                    "authorization": "Bearer " + localStorage.getItem("user"),
+                }),
+                body: JSON.stringify(qwe)
+            })
+            const data = await res.json()
+            if (data.success) {
+                getData(title)
+                toast.success("Review Added Successfully")
+            }
+            else{
+                toast.error(data.message)
+            }
+        }
+        catch (error) {
+            console.log(error.message);
+            toast.error("Error Adding Review")
+        }
+        // Clear the review form after adding the review
+        setNewReview({ content: "", stars: 0 });
+    }
     const handleBuyNow = async () => {
         // Assuming you want to navigate to '/checkout' and pass some props
         console.log("buying");
@@ -53,34 +117,64 @@ const Page = ({ params }) => {
             }
         );
     };
-    const handleAddComment = async () => {
+    const handleAddComment = async (event) => {
         try {
+            setLoadingcomment(true);
+            event.persist();
+            event.preventDefault();
             // Assuming you have a function to send a comment to the server and get a response with the updated comments
-            const response = await addCommentToServer(newComment, product._id);
-            if (response.success) {
-                setProduct({ ...product, comments: response.comments });
+            const response = await fetch('/api/product/comment', {
+                method: "POST",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                    "authorization": "Bearer " + localStorage.getItem("user"),
+                }),
+                body: JSON.stringify({
+                    content: newComment,
+                    productid: product._id
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                // setProduct({ ...product, comments: response.comments });
+                // window.location.reload();
+                getData(title)
+                setLoadingcomment(false);
+                toast.success("Comment Added Successfully")
                 setNewComment(""); // Clear the input field
+                // fetchProductData();
             }
         } catch (error) {
+            toast.error("Adding Comment failed")
             console.error("Error adding comment:", error);
         }
     };
 
-    const handleAddReply = async (commentId) => {
+    const handleAddReply = async (commentId, event) => {
         try {
-            // Assuming you have a function to send a reply to the server and get a response with the updated replies
-            const response = await addReplyToServer(newReply, commentId);
-            if (response.success) {
-                const updatedComments = product.comments.map((comment) =>
-                    comment._id === commentId
-                        ? { ...comment, replies: response.replies }
-                        : comment
-                );
-                setProduct({ ...product, comments: updatedComments });
-                setNewReply(""); // Clear the input field
+            event.preventDefault()
+            // Assuming you have a function to send a reply to the server and get a
+            const newReview = {
+                content: content,
+                rating: rating,
+                productid: product._id
+            }
+            const res = await fetch('/api/product/review', {
+                method: "POST",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                    "authorization": "Bearer " + localStorage.getItem("user"),
+                }),
+                body: JSON.stringify(newReview)
+            })
+            const data = await res.json()
+            if (data.success) {
+                toast.success("Review Added Successfully")
+                getData(title)
             }
         } catch (error) {
             console.error("Error adding reply:", error);
+            toast.error("Something went wrong")
         }
     };
     const handleaddtocart = async () => {
@@ -126,6 +220,7 @@ const Page = ({ params }) => {
     useEffect(() => {
         const fetchProductData = async () => {
             const slug = params.slug.replace(/%20/g, " ");
+            settitle(slug)
             const data = await getData(slug);
             setLoading(false);
             console.log(data);
@@ -257,7 +352,7 @@ const Page = ({ params }) => {
                     <div className="desc">
                         {/* Displaying comments */}
                         {product &&
-                            product.comments.map((comment) => {
+                            product?.comments?.map((comment) => {
                                 return (
                                     <div
                                         class="flex items-center mb-5 space-x-4"
@@ -336,16 +431,20 @@ const Page = ({ params }) => {
                                 );
                             })}
                         {/* Add Comment */}
-                        <div>
-                            <form>
-                                <input
-                                    type="text"
-                                    placeholder="Add your comment..."
-                                // Add event handlers to handle input and submit
-                                />
-                                <button type="submit" className="text-white py-2 px-4 rounded-md  hover:bg-orange-400 bg-orange-500">Add Comment</button>
-                            </form>
-                        </div>
+                        <form onSubmit={handleAddComment}> {/* Add onSubmit event handler */}
+                            <input
+                                type="text"
+                                placeholder="Add your comment..."
+                                value={newComment} // Bind the input value to the state
+                                onChange={(e) => setNewComment(e.target.value)} // Handle input change and update the state
+                            />
+                            <button
+                                type="submit"
+                                className="text-white py-2 px-4 rounded-md ml-10 hover:bg-orange-400 bg-orange-500"
+                            >
+                                {loadingcomment ? "Adding Comment.." : "Add Comment"}
+                            </button>
+                        </form>
                     </div>
                 ) : (
                     <div className="desc">
@@ -379,6 +478,28 @@ const Page = ({ params }) => {
                                     </div>
                                 );
                             })}
+                        <form>
+                            <textarea
+                                placeholder="Add your review..."
+                                value={newReview.content}
+                                onChange={(e) =>
+                                    setNewReview({ ...newReview, content: e.target.value })
+                                }
+                            />
+                            <StarRating
+                                rating={newReview.stars}
+                                onChange={(rating) =>
+                                    setNewReview({ ...newReview, stars: rating })
+                                }
+                            />
+                            <button
+                                type="button"
+                                onClick={handleAddReview}
+                                className="text-white py-2 px-4 rounded-md  hover:bg-orange-400 bg-orange-500"
+                            >
+                                Add Review
+                            </button>
+                        </form>
                     </div>
                 )}
             </div>
