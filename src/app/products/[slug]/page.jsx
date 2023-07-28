@@ -80,7 +80,7 @@ const Page = ({ params }) => {
                 getData(title)
                 toast.success("Review Added Successfully")
             }
-            else{
+            else {
                 toast.error(data.message)
             }
         }
@@ -457,15 +457,15 @@ const Page = ({ params }) => {
                                     >
                                         <div className="image">
                                             <Image
-                                                height={70}
-                                                width={50}
+                                                height={100}
+                                                className="rounded-full w-16 h-16 object-cover"
+                                                width={100}
                                                 alt=""
                                                 src={
                                                     review.user
                                                         ? review.user.dp
                                                         : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010"
                                                 }
-                                                className="rounded-full"
                                             />
                                         </div>
                                         <div>

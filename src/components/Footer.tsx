@@ -4,11 +4,11 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <div>
-      <footer className=" bg-red-50 text-center text-black lg:text-left">
-        <div className="mx-6 pl-56 pr-56 py-10 text-center md:text-left">
+      <footer className="bg-red-50 text-center text-black lg:text-left">
+        <div className="mx-4 md:mx-6 lg:pl-56 lg:pr-56 py-10 text-center md:text-left">
           <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="">
-              <h6 className="mb-4 flex items-center justify-center font-semibold uppercase md:justify-start">
+              <h6 className="mb-4 flex items-center justify-center md:justify-start font-semibold uppercase">
                 <Image src="/logo.png" width={100} height={100} alt={""} />
               </h6>
               <p>
@@ -22,7 +22,7 @@ const Footer = () => {
               <h6 className="mb-4 flex justify-center text-xl font-bold uppercase md:justify-start">
                 Popular Tags
               </h6>
-              <div className="inline-flex flex-wrap">
+              <div className="inline-flex flex-wrap justify-center md:justify-start">
                 <div className="mb-2 mr-2  hover:text-white hover:bg-orange-600 bg-white rounded-md border border-white p-2">
                   Fashion
                 </div>

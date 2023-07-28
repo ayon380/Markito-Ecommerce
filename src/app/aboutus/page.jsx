@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Slide } from "react-awesome-reveal";
 import Image from 'next/image'
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+ // requires a loader
 const page = () => {
     return (
         <div>

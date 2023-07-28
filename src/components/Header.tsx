@@ -12,14 +12,12 @@ const Header = () => {
       <div className="t bg-orange-600 text-xl">
         <div className="cont">
           <div className="r">
-            <div className="flex justify-between p-3 mx-96">
+            <div className="flex justify-between p-3 mx-4 md:mx-96">
               <div className="flex text-white ">
                 <div className="bg-orange-600 ">
                   <select className="option-bg bg-orange-600">
                     <option value="INR">INR</option>
-                    <option value="USD">
-                      USD
-                    </option>
+                    <option value="USD">USD</option>
                     <option value="UAE">UAE</option>
                   </select>
                 </div>
@@ -31,7 +29,7 @@ const Header = () => {
                   </select>
                 </div>
               </div>
-              <div className=" flex justify-end text-white">
+              <div className="hidden md:flex justify-end text-white">
                 <a href="#" className="mr-2">
                   <BiLogoFacebook />
                 </a>
@@ -47,6 +45,24 @@ const Header = () => {
                 <a href="#" className="mr-2">
                   <BsPinterest />
                 </a>
+              </div>
+              <div className="md:hidden flex justify-end text-white">
+                {/* Mobile-friendly social icons */}
+                <div className="mr-2">
+                  <BiLogoFacebook />
+                </div>
+                <div className="mr-2">
+                  <AiOutlineGooglePlus />
+                </div>
+                <div className="mr-2 active">
+                  <AiOutlineTwitter />
+                </div>
+                <div className="mr-2">
+                  <AiFillLinkedin />
+                </div>
+                <div className="mr-2">
+                  <BsPinterest />
+                </div>
               </div>
             </div>
           </div>
