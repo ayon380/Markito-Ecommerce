@@ -55,6 +55,10 @@ const Page = ({ params }) => {
     };
     const handleAddReview = async (event) => {
         event.preventDefault();
+        if (!localStorage.getItem("user") || localStorage.getItem("user") === "undefined") {
+            toast.error("Please Login to add review")
+            return
+        }
         if (newReview.content.trim() === "" || newReview.stars === 0) {
             toast.error("Please provide a review and rating.");
             return;
@@ -92,6 +96,10 @@ const Page = ({ params }) => {
         setNewReview({ content: "", stars: 0 });
     }
     const handleBuyNow = async () => {
+        if (!localStorage.getItem("user") || localStorage.getItem("user") === "undefined") {
+            toast.error("Please Login to buy now")
+            return
+        }
         // Assuming you want to navigate to '/checkout' and pass some props
         console.log("buying");
         if (product != null) {
@@ -118,10 +126,15 @@ const Page = ({ params }) => {
         );
     };
     const handleAddComment = async (event) => {
+
         try {
             setLoadingcomment(true);
             event.persist();
             event.preventDefault();
+            if (!localStorage.getItem("user") || localStorage.getItem("user") === "undefined") {
+                toast.error("Please Login to add comment")
+                return
+            }
             // Assuming you have a function to send a comment to the server and get a response with the updated comments
             const response = await fetch('/api/product/comment', {
                 method: "POST",
@@ -179,6 +192,10 @@ const Page = ({ params }) => {
     };
     const handleaddtocart = async () => {
         // Assuming you want to navigate to '/checkout' and pass some props
+        if (!localStorage.getItem("user") || localStorage.getItem("user") === "undefined") {
+            toast.error("Please Login to add to cart")
+            return
+        }
         try {
             console.log("adding to cart");
             const req = {
