@@ -22,12 +22,14 @@ const Page = () => {
 
     }
     const calculateGrandTotal = () => {
-        const grandTotal = cart.reduce((total, item) => {
-            const itemTotal = item.price * item.quantity;
-            return total + itemTotal;
-        }, 0);
+        if (cart) {
+            const grandTotal = cart.reduce((total, item) => {
+                const itemTotal = item.price * item.quantity;
+                return total + itemTotal;
+            }, 0);
 
-        return grandTotal;
+            return grandTotal;
+        }
     };
     const calculateTotalForItem = (item) => {
         return item.price * item.quantity;
@@ -83,25 +85,29 @@ const Page = () => {
     };
     React.useEffect(() => {
         const first = async () => {
-            const token = localStorage.getItem("user")
-            try {
-                const res = await fetch('api/cart/get', {
-                    method: 'POST',
-                    headers: new Headers({
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/json'
-                    }),
-                });
-                const as = await res.json();
-                console.log(as.cart);
-                setCart(as.cart);
-                setloading(false)
-                if (!as.success) {
+            if (!localStorage.getItem("user") || localStorage.getItem("user") === "undefined") {
+                router.push('/login')
+            } else {
+                const token = localStorage.getItem("user")
+                try {
+                    const res = await fetch('api/cart/get', {
+                        method: 'POST',
+                        headers: new Headers({
+                            'Authorization': 'Bearer ' + token,
+                            'Content-Type': 'application/json'
+                        }),
+                    });
+                    const as = await res.json();
+                    console.log(as.cart);
+                    setCart(as.cart);
+                    setloading(false)
+                    if (!as.success) {
+                        router.push('/')
+                    }
+                } catch (error) {
+                    console.log(error);
                     router.push('/')
                 }
-            } catch (error) {
-                console.log(error);
-                router.push('/')
             }
         }
         first()
@@ -128,56 +134,56 @@ const Page = () => {
                         <Image width={400} height={400} alt="" src="/contact.png"></Image></Slide>
                 </div>
             </div>
-            <Slide direction="up" duration={1500} cascade triggerOnce>{
+            <Slide direction="up" duration={1500} cascade triggerOnce>{cart &&
                 cart.length === 0 ? <div className="flex justify-center my-20"><h1 className="text-3xl font-bold">No Items in Cart</h1></div> :
 
-                    <div className="main mx-96 border rounded-xl my-24 p-7 border-gray-300">
-                        <h1 className='font-bold text-4xl'>Shopping Cart</h1>
-                        <div className='flex justify-around font-bold mt-7'>
-                            <div className='flex'>
-                                Product</div>
-                            <div className='flex'>
-                                Name</div>
-                            <div className='flex'>
-                                Price</div>
-                            <div className='flex'>
-                                Quantity</div>
-                            <div className='flex'>
-                                Total</div>
-                            <div className='flex'>
-                                Action</div>
+                <div className="main mx-96 border rounded-xl my-24 p-7 border-gray-300">
+                    <h1 className='font-bold text-4xl'>Shopping Cart</h1>
+                    <div className='flex justify-around font-bold mt-7'>
+                        <div className='flex'>
+                            Product</div>
+                        <div className='flex'>
+                            Name</div>
+                        <div className='flex'>
+                            Price</div>
+                        <div className='flex'>
+                            Quantity</div>
+                        <div className='flex'>
+                            Total</div>
+                        <div className='flex'>
+                            Action</div>
 
-                        </div>
-                        <div className="border rounded-xl border-black "></div>
-                        {cart && cart.map((item, index) => {
-                            return (
-                                <div key={index} className='flex justify-around p-3 '>
-                                    <Image width={400} height={400} alt="" className="bg-gray-200 w-20 object-contain h-20" src={item.product.images[0]}></Image>
-                                    <div className="m1 mt-5">
-                                        {item.product.name}</div>
-                                    <div className="price font-bold text-xl mt-5">{item.price}</div>
-                                    <div className="q mt-5">
-                                        <button onClick={() => handleDecrement(index)} className="bg-gray-300 rounded-xl w-4 mr-2">-</button>
-                                        {item.quantity}<button onClick={() => handleIncrement(index)} className="bg-gray-300 rounded-xl w-4 ml-2">+</button>
-                                    </div>
-                                    <div className="total font-bold text-xl mt-5">{calculateTotalForItem(item)}</div>
-                                    <div className="act mt-5" onClick={() => {
-                                        handleDelete(index)
-                                    }}><AiFillDelete /></div>
+                    </div>
+                    <div className="border rounded-xl border-black "></div>
+                    {cart && cart.map((item, index) => {
+                        return (
+                            <div key={index} className='flex justify-around p-3 '>
+                                <Image width={400} height={400} alt="" className="bg-gray-200 w-20 object-contain h-20" src={item.product.images[0]}></Image>
+                                <div className="m1 mt-5">
+                                    {item.product.name}</div>
+                                <div className="price font-bold text-xl mt-5">{item.price}</div>
+                                <div className="q mt-5">
+                                    <button onClick={() => handleDecrement(index)} className="bg-gray-300 rounded-xl w-4 mr-2">-</button>
+                                    {item.quantity}<button onClick={() => handleIncrement(index)} className="bg-gray-300 rounded-xl w-4 ml-2">+</button>
                                 </div>
-                            )
-                        })}
+                                <div className="total font-bold text-xl mt-5">{calculateTotalForItem(item)}</div>
+                                <div className="act mt-5" onClick={() => {
+                                    handleDelete(index)
+                                }}><AiFillDelete /></div>
+                            </div>
+                        )
+                    })}
 
-                        <div className="border rouned-xl border-gray-500"></div>
-                        <div className="main2 flex justify-between mt-7">
-                            <button onClick={() => { router.push('/') }} className="bg-orange-500 hover:bg-orange-600 p-3 text-white rounded-md"> Continue Shopping</button>
-                            <div className="to font-bold text-xl ">
-                                Grand Total: ${calculateGrandTotal()}</div>
-                            <button onClick={handlecheckout} className="bg-black  hover:bg-orange-600 p-3 text-white rounded-md">
-                                Proceed to Checkout
-                            </button>
-                        </div>
-                    </div>}</Slide>
+                    <div className="border rouned-xl border-gray-500"></div>
+                    <div className="main2 flex justify-between mt-7">
+                        <button onClick={() => { router.push('/') }} className="bg-orange-500 hover:bg-orange-600 p-3 text-white rounded-md"> Continue Shopping</button>
+                        <div className="to font-bold text-xl ">
+                            Grand Total: ${calculateGrandTotal()}</div>
+                        <button onClick={handlecheckout} className="bg-black  hover:bg-orange-600 p-3 text-white rounded-md">
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>}</Slide>
         </div>
 
     )

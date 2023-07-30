@@ -42,27 +42,27 @@ export default function Home() {
         >
           <Loading />
         </div>
-        <div className="h-24 bg-gray-100">L</div>
-        <div className="lp bg-gray-100">
-          <Carousel showArrows={true} showThumbs={false} dynamicHeight>
+        <div className="h-5 md:h-24 bg-gray-100"></div>
+        <div className="h-auto bg-gray-100 ">
+          <Carousel showArrows={true} showThumbs={false} >
             <div>
               <Slide direction="up" duration={1500} cascade triggerOnce>
-                <div className="flex justify-start item mx-96  ">
-                  <div className="head my-auto">
-                    <div className="p text-left font-semi-bold text-3xl mb-5">
+                <div className="flex flex-wrap h-auto justify-center items-start md:mx-96">
+                  <div className="head my-auto items-start"> {/* Add "items-start" class here */}
+                    <div className="pl-4 md:p-0 text-left font-semi-bold text-3xl mb-5">
                       New Arrivals
                     </div>
-                    <div className="flex text-left text-7xl font-bold mb-5">
+                    <div className="flex pl-4 md:pl-0 text-left text-3xl md:text-7xl font-bold mb-5">
                       <div className="l1">SHOE</div>
                       <div className="l2 text-orange-500">COLLECTIONS</div>
                     </div>
-                    <div className="p text-left mb-5 text-gray-500 font-semibold">
+                    <div className="py-4 md:p-0 text-left mb-5 md:w-96 text-gray-500 font-semibold">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Quaerat porro labore consequatur a sapiente voluptatem
                       vero eligendi excepturi maxime animi.
                     </div>
                     <Link href="/shop">
-                      <button className="bg-orange-500 rounded-md p-2 mt-5  text-white shadow-md ">
+                      <button className="bg-orange-500 rounded-md p-2 mt-5 text-white shadow-md">
                         SHOP NOW
                       </button>
                     </Link>
@@ -80,10 +80,12 @@ export default function Home() {
               </Slide>
             </div>
             <div>
-              <Image alt="" height={300} width={300} src="/slider-img.png" />
+              <Image alt="" height={300} width={300} src="/slider-img.png" className="h-auto md:h-96" />
               <p className="legend">Legend 2</p>
             </div>
           </Carousel>
+
+
         </div>
         <div className="h-24 bg-gray-100"></div>
         <div className="flex mx-96 justify-between text-2xl mt-20 mb-10 bg-white">

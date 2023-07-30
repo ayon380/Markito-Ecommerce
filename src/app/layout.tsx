@@ -1,28 +1,32 @@
-import Header from '@/components/Header'
-import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import Header from '@/components/Header';
+import './globals.css';
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/react';
-const inter = Inter({ subsets: ['latin'] })
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
+const myFont = localFont({
+  src: '/Product Sans Regular.ttf',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Markito',
   description: 'Ecommerce Store',
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={myFont.className}>
       <head>
-        <link rel='icon' href='/icon.png'/>
+        <link rel="icon" href="/icon.png" />
       </head>
-      <body className={inter.className}>
+      <body>
         <Header />
         <Navbar />
         {children}
@@ -30,5 +34,5 @@ export default function RootLayout({
         <Footer />
       </body>
     </html>
-  )
+  );
 }
