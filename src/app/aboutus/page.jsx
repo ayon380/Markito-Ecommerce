@@ -25,11 +25,17 @@ const page = () => {
                 <Slide direction="up" duration={500} cascade triggerOnce>
                     <div className="tiles1">
                         <div className="h1 font-extrabold text-3xl pb-4">Who We Are?</div>
-                        <div className='w-96 text-base'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus Donec quam felis ultricies.<br></br>
-                            <br></br>
-                            Nulla consequat massa quis enim Donec pede justo fringilla vele aliquet nec vulputate eget arcu. In enim justo rhoncus imperdieti venenatis vitae justo. Nullam dictum felis eu pede mollis pretiumg Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula porttitor conse vitae eleifend acenim. Aliquam lorem ante, dapibus in viverra quis feugiat a tellus.
+                        <div className='w-96 text-base'>
+                            Allow me to take you behind the scenes of an incredible journey - the creation of this Ecommerce Website, crafted as a Personal Project by none other than myself. This voyage of creation was nothing short of a remarkable learning expedition, a testament to my dedication and tenacity. Crafting this website stood as one of my most formidable challenges to date, pushing the boundaries of my skills and perseverance.<br></br><br></br>
+
+                            To bring this vision to life, I delved deep into the intricate realm of MongoDB, mastering its complexities. Next.js 13.4 became my trusted ally, enabling seamless user experiences and dynamic functionalities. The integration of Razorpay added another layer of finesse, ensuring secure and streamlined transactions. Docker played its part, ensuring efficient deployment and scalability, while TailwindCSS lent its aesthetic prowess, shaping the website's visual appeal. React Awesome Reveal contributed its magic touch, adding captivating animations that breathe life into each interaction.
                             <br></br><br></br>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</div>
+                            This website is the harmonious symphony of Next.js, MongoDB, Razorpay, Docker, TailwindCSS, and React Awesome Reveal, each playing a unique note to create a seamless masterpiece.
+                            <br></br><br></br>
+                            As you embark on your journey through this website, I invite you to discover the artistry that has gone into every pixel and line of code. I extend a heartfelt invitation to share this digital creation with your friends and family, spreading the joy and innovation that lies within. I also eagerly welcome any insights or suggestions you may have. Your feedback is invaluable as I continue to refine and enhance this digital creation.
+                            <br></br><br></br>
+                            Thank you for being a part of this remarkable journey. Your support and appreciation fuel my passion for innovation and continuous improvement.
+                        </div>
                     </div>
 
                     <div className="tiles2 ">
@@ -37,53 +43,53 @@ const page = () => {
                     </div>
                 </Slide>
             </div>
-            <div className="main2 flex flex-wrap bg-red-50 px-4 py-6 md:px-20 lg:px-32 xl:pl-6
-            4">
-                <div className="m1 flex m-3 w-full md:w-auto">
-                    <div className="icon rounded-full border-orange-600 border-4 h-13 ">
-                        <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+            <div className="lp px-80 rounded-lg my-10">
+                <div className="main2 flex flex-wrap  bg-red-50  py-6 rounded-lg">
+                    <div className="m1 flex m-3 w-full md:w-auto">
+                        <div className="icon rounded-full border-orange-600 border-4 h-13 ">
+                            <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+                        </div>
+                        <div className="h1 pl-2 text-sm">
+                            <div className="p  font-extrabold text-xl pb-1">
+                                Customer Support</div>
+                            <div className="p">
+                                Lorem ipsum dolor sit amet gfh.
+                            </div></div>
                     </div>
-                    <div className="h1 pl-2 text-sm">
-                        <div className="p  font-extrabold text-xl pb-1">
-                            Customer Support</div>
-                        <div className="p">
-                            Lorem ipsum dolor sit amet gfh.
-                        </div></div>
-                </div>
-                <div className="m1 flex m-3 w-full md:w-auto">
-                    <div className="icon rounded-full border-orange-600 border-4 h-13 ">
-                        <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+                    <div className="m1 flex m-3 w-full md:w-auto">
+                        <div className="icon rounded-full border-orange-600 border-4 h-13 ">
+                            <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+                        </div>
+                        <div className="h1 pl-2 text-sm">
+                            <div className="p  font-extrabold text-xl pb-1">
+                                Customer Support</div>
+                            <div className="p">
+                                Lorem ipsum dolor sit amet gfh.
+                            </div></div>
                     </div>
-                    <div className="h1 pl-2 text-sm">
-                        <div className="p  font-extrabold text-xl pb-1">
-                            Customer Support</div>
-                        <div className="p">
-                            Lorem ipsum dolor sit amet gfh.
-                        </div></div>
-                </div>
-                <div className="m1 flex m-3 w-full md:w-auto">
-                    <div className="icon rounded-full border-orange-600 border-4 h-13 ">
-                        <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+                    <div className="m1 flex m-3 w-full md:w-auto">
+                        <div className="icon rounded-full border-orange-600 border-4 h-13 ">
+                            <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+                        </div>
+                        <div className="h1 pl-2 text-sm">
+                            <div className="p  font-extrabold text-xl pb-1">
+                                Customer Support</div>
+                            <div className="p">
+                                Lorem ipsum dolor sit amet gfh.
+                            </div></div>
                     </div>
-                    <div className="h1 pl-2 text-sm">
-                        <div className="p  font-extrabold text-xl pb-1">
-                            Customer Support</div>
-                        <div className="p">
-                            Lorem ipsum dolor sit amet gfh.
-                        </div></div>
-                </div>
-                <div className="m1 flex m-3 w-full md:w-auto">
-                    <div className="icon rounded-full border-orange-600 border-4 h-13 ">
-                        <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+                    <div className="m1 flex m-3 w-full md:w-auto">
+                        <div className="icon rounded-full border-orange-600 border-4 h-13 ">
+                            <Image height={80} width={80} alt="" className="p-3" src="/01.png"></Image>
+                        </div>
+                        <div className="h1 pl-2 text-sm">
+                            <div className="p  font-extrabold text-xl pb-1">
+                                Customer Support</div>
+                            <div className="p">
+                                Lorem ipsum dolor sit amet gfh.
+                            </div></div>
                     </div>
-                    <div className="h1 pl-2 text-sm">
-                        <div className="p  font-extrabold text-xl pb-1">
-                            Customer Support</div>
-                        <div className="p">
-                            Lorem ipsum dolor sit amet gfh.
-                        </div></div>
                 </div>
-
             </div>
         </div>
     )
